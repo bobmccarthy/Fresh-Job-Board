@@ -6,11 +6,11 @@ module.exports=React.createClass({
 				<hr className="bigBreak"/>
 				<div className="logo">
 					<strong className="strong"><a href="#">Fresh Jobs</a></strong>
-					<a href="#Jobs">Jobs</a> 
-					<a href="#Companies">Companies</a> 
-					<a href="#Cities">Cities</a> 
-					<a href="#WhyFresh">Why Fresh?</a> 
-					<a href="#ForEmployers">For Employers</a> 
+					<a href="#jobs">Jobs</a> 
+					<a href="#companies">Companies</a> 
+					<a href="#cities">Cities</a> 
+					<a href="#whyfresh">Why Fresh?</a> 
+					<a href="#employers">For Employers</a> 
 				</div>
 			</nav>
 
