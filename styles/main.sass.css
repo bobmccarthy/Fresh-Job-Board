@@ -31,13 +31,13 @@ nav {
 
 #form {
   padding-bottom: 4em;
-  margin: 0 1em 2em 1em; }
+  margin: 0 2em 2em 2em; }
 
 .border {
   background-color: white;
   border: 6px double grey;
   padding: 1.5em;
-  margin: 0 1em; }
+  margin: 0 2em; }
   .border p {
     color: #555555;
     font-size: 1em; }
