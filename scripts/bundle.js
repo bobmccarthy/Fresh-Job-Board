@@ -32536,10 +32536,11 @@ var Backbone = require('backbone');
 var JobPostModel = require('../models/JobPostModel.js');
 
 module.exports = Backbone.Collection.extend({
-	model: JobPostModel
+	model: JobPostModel,
+	url: 'https://jmingus-server.herokuapp.com/collections/bob-jobs'
 });
 
-},{"../models/JobPostModel.js":169,"backbone":1}],161:[function(require,module,exports){
+},{"../models/JobPostModel.js":171,"backbone":1}],161:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -32547,47 +32548,14 @@ var Backbone = require('backbone');
 
 var JobPostComponent = require('./JobPostComponent.js');
 var JobDetailsComponent = require('./JobPostComponent.js');
-var JobAddComponent = require('./JobPostComponent.js');
+var JobFormComponent = require('./JobFormComponent.js');
+var CompanyBoxComponent = require('./CompanyBoxComponent');
 
 var NewJobCollection = require('../collections/NewJobCollection');
 // var CompanyCollection = require('../collections/CompanyCollection');
 
-var JobPostModel = require('../models/JobPostModel.js');
+// var JobPostModel = require('../models/JobPostModel.js');
 // var CompanyModel = require('../models/CompanyModel.js');
-
-var newJobModel1 = new JobPostModel({
-	id: 0,
-	title: 'Front End Developer',
-	company: 'GOOGLE',
-	location: 'Austin, Tx',
-	description: 'We are looking for someone experienced in using jQuery, Backbone, and react.',
-	longVerse: '',
-	tags: ['BestPlaceToWork', ' Google', ' Fun', ' Awesome!'],
-	date: new Date().toDateString()
-});
-var newJobModel2 = new JobPostModel({
-	id: 1,
-	title: 'Back End Developer',
-	company: 'Display Inc.',
-	location: 'Austin, Tx',
-	description: 'We are looking for someone experienced in using jQuery, Backbone, and react.',
-	longVerse: '',
-	tags: ['BestPlaceToWork', ' Google', ' Fun', ' Awesome!'],
-	date: new Date().toDateString()
-});
-var newJobModel3 = new JobPostModel({
-	id: 2,
-	title: 'Fun Time Live',
-	company: 'Fun Inc.',
-	location: 'Austin, Tx',
-	description: 'Whoever is having the best time ever! We are looking for someone experienced in using jQuery, Backbone, and react.',
-	longVerse: '',
-	tags: ['Fun', ' Intense', ' Fun', ' Awesome!'],
-	date: new Date().toDateString()
-});
-var newJob = new NewJobCollection([newJobModel1, newJobModel2, newJobModel3]);
-
-console.log(newJob);
 
 module.exports = React.createClass({
 	displayName: 'exports',
@@ -32600,14 +32568,18 @@ module.exports = React.createClass({
 	},
 	componentWillMount: function componentWillMount() {
 		var that = this;
-		// this.jobs = new JobCollection();
-		// newJob.fetch();
+		this.jobs = new NewJobCollection();
+		this.jobs.fetch();
+		this.jobs.on('sync', function () {
+			that.forceUpdate();
+		});
 		var Router = Backbone.Router.extend({
 			routes: {
 				'': 'home',
 				'jobs': 'list',
-				'add': 'add',
-				'details/:id': 'details'
+				'employers': 'add',
+				'details/:id': 'details',
+				'companies': 'companies'
 			},
 			home: function home() {
 				that.setState({
@@ -32621,13 +32593,18 @@ module.exports = React.createClass({
 			},
 			add: function add() {
 				that.setState({
-					pageName: 'add'
+					pageName: 'employers'
 				});
 			},
 			details: function details(id) {
 				that.setState({
 					pageName: 'details',
 					id: id
+				});
+			},
+			companies: function companies() {
+				that.setState({
+					pageName: 'companies'
 				});
 			}
 		});
@@ -32638,11 +32615,13 @@ module.exports = React.createClass({
 	render: function render() {
 		var pageOn = null;
 		if (this.state.pageName === 'jobs') {
-			pageOn = React.createElement(JobPostComponent, { collection: newJob });
+			pageOn = React.createElement(JobPostComponent, { collection: this.jobs });
 		} else if (this.state.pageName === 'details') {
 			pageOn = React.createElement(JobDetailsComponent, null);
-		} else if (this.state.pageName === 'add') {
-			pageOn = React.createElement(JobAddComponent, null);
+		} else if (this.state.pageName === 'employers') {
+			pageOn = React.createElement(JobFormComponent, null);
+		} else if (this.state.pageName === 'companies') {
+			pageOn = React.createElement(CompanyBoxComponent, null);
 		}
 
 		return React.createElement(
@@ -32654,7 +32633,7 @@ module.exports = React.createClass({
 
 });
 
-},{"../collections/NewJobCollection":160,"../models/JobPostModel.js":169,"./JobPostComponent.js":163,"backbone":1,"react":159}],162:[function(require,module,exports){
+},{"../collections/NewJobCollection":160,"./CompanyBoxComponent":162,"./JobFormComponent.js":163,"./JobPostComponent.js":164,"backbone":1,"react":159}],162:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -32701,6 +32680,88 @@ module.exports = React.createClass({
 'use strict';
 
 var React = require('react');
+var JobTipsComponent = require('./JobTipsComponent');
+
+module.exports = React.createClass({
+	displayName: 'exports',
+
+	render: function render() {
+		return React.createElement(
+			'div',
+			null,
+			React.createElement(
+				'div',
+				{ className: 'border', id: 'form' },
+				React.createElement(
+					'h2',
+					null,
+					'Post Your Job'
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'h4',
+						null,
+						'Title'
+					),
+					React.createElement('input', { type: 'text' })
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'h4',
+						null,
+						'Company Name'
+					),
+					React.createElement('input', { type: 'text' })
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'h4',
+						null,
+						'Location'
+					),
+					React.createElement('input', { type: 'text' })
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'h4',
+						null,
+						'Description'
+					),
+					React.createElement('textarea', { type: 'text' })
+				),
+				React.createElement(
+					'div',
+					null,
+					React.createElement(
+						'h4',
+						null,
+						'Tags'
+					),
+					React.createElement('input', { type: 'text' })
+				),
+				React.createElement(
+					'button',
+					{ className: 'submitButton' },
+					'Submit Job'
+				)
+			),
+			React.createElement(JobTipsComponent, null)
+		);
+	}
+});
+
+},{"./JobTipsComponent":166,"react":159}],164:[function(require,module,exports){
+'use strict';
+
+var React = require('react');
 var JobRowComponent = require('./JobRowComponent');
 var CompanyBoxComponent = require('./CompanyBoxComponent');
 var LookingCreateComponent = require('./LookingCreateComponent');
@@ -32721,18 +32782,16 @@ module.exports = React.createClass({
 	displayName: 'exports',
 
 	render: function render() {
-
-		var jobRows = this.props.collection.map(function (job) {
-			return React.createElement(JobRowComponent, { key: job.id, job: job });
+		var newJobbies = this.props.collection.map(function (job) {
+			return React.createElement(JobRowComponent, { key: job.get('_id'), bimjob: job });
 		});
-
 		return React.createElement(
 			'div',
 			null,
 			React.createElement(
 				'div',
 				{ className: 'boardBorder' },
-				jobRows
+				newJobbies
 			),
 			React.createElement(
 				'div',
@@ -32745,7 +32804,7 @@ module.exports = React.createClass({
 
 });
 
-},{"../models/CompanyModel":168,"./CompanyBoxComponent":162,"./JobRowComponent":164,"./LookingCreateComponent":165,"react":159}],164:[function(require,module,exports){
+},{"../models/CompanyModel":170,"./CompanyBoxComponent":162,"./JobRowComponent":165,"./LookingCreateComponent":167,"react":159}],165:[function(require,module,exports){
 'use strict';
 
 var React = require('react');
@@ -32764,13 +32823,17 @@ module.exports = React.createClass({
 				React.createElement(
 					'strong',
 					null,
-					this.props.job.get('title')
+					React.createElement(
+						'a',
+						{ href: '#jobs' },
+						this.props.bimjob.get('title')
+					)
 				),
 				' ',
 				React.createElement(
 					'span',
 					{ className: 'postDate' },
-					this.props.job.get('date')
+					this.props.bimjob.get('date')
 				)
 			),
 			React.createElement(
@@ -32782,16 +32845,16 @@ module.exports = React.createClass({
 					React.createElement(
 						'strong',
 						null,
-						this.props.job.get('company')
+						this.props.bimjob.get('company')
 					),
 					' - ',
-					this.props.job.get('location')
+					this.props.bimjob.get('location')
 				)
 			),
 			React.createElement(
 				'p',
 				null,
-				this.props.job.get('description')
+				this.props.bimjob.get('description')
 			),
 			React.createElement(
 				'div',
@@ -32799,7 +32862,7 @@ module.exports = React.createClass({
 				React.createElement(
 					'span',
 					{ className: 'taga' },
-					this.props.job.get('tags')
+					this.props.bimjob.get('tags')
 				)
 			)
 		);
@@ -32807,7 +32870,78 @@ module.exports = React.createClass({
 
 });
 
-},{"react":159}],165:[function(require,module,exports){
+},{"react":159}],166:[function(require,module,exports){
+"use strict";
+
+var React = require('react');
+module.exports = React.createClass({
+	displayName: "exports",
+
+	render: function render() {
+		return React.createElement(
+			"div",
+			{ className: "border" },
+			React.createElement(
+				"h2",
+				null,
+				"Tips For Your Job Posting"
+			),
+			React.createElement("hr", null),
+			React.createElement(
+				"p",
+				null,
+				React.createElement(
+					"strong",
+					null,
+					"Add Keywords"
+				),
+				" because the majority of canidates search for available positions using keywords, make sure you use all relevant keywords in your posting"
+			),
+			React.createElement(
+				"p",
+				null,
+				React.createElement(
+					"strong",
+					null,
+					"Use Familiar Job Titles."
+				),
+				" Use specific but familiar job titles in your postings. Make sure the titles are clear and succinct."
+			),
+			React.createElement(
+				"p",
+				null,
+				React.createElement(
+					"strong",
+					null,
+					"Give Them Details."
+				),
+				" The porpose of posting a job is to spark a candidates interest in the available position. When job postings have detailed descriptions, candidates tend to apply to them more."
+			),
+			React.createElement(
+				"p",
+				null,
+				React.createElement(
+					"strong",
+					null,
+					"Expand your Location"
+				),
+				" Do not limit your job posting to a restricted area around the jobs location. Make sure to include surrounding cities and metropolitan areas in your searches."
+			),
+			React.createElement(
+				"p",
+				null,
+				React.createElement(
+					"strong",
+					null,
+					"Discuss Compensation"
+				),
+				" Even though you may not want to give an exact compensation, give a range. Make sure to point out any bonuses, commissions, or non-monetary compensation, as well."
+			)
+		);
+	}
+});
+
+},{"react":159}],167:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -32864,7 +32998,7 @@ module.exports = React.createClass({
 
 });
 
-},{"react":159}],166:[function(require,module,exports){
+},{"react":159}],168:[function(require,module,exports){
 "use strict";
 
 var React = require('react');
@@ -32918,7 +33052,7 @@ module.exports = React.createClass({
 	}
 });
 
-},{"react":159}],167:[function(require,module,exports){
+},{"react":159}],169:[function(require,module,exports){
 'use strict';
 var React = require('react');
 var $ = require('jquery');
@@ -32937,7 +33071,7 @@ $(document).ready(function () {
 	React.render(React.createElement(AppComponent, null), main);
 });
 
-},{"./components/AppComponent.js":161,"./components/NavComponent.js":166,"jquery":4,"react":159}],168:[function(require,module,exports){
+},{"./components/AppComponent.js":161,"./components/NavComponent.js":168,"jquery":4,"react":159}],170:[function(require,module,exports){
 'use strict';
 
 var Backbone = require('backbone');
@@ -32956,14 +33090,13 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"backbone":1}],169:[function(require,module,exports){
+},{"backbone":1}],171:[function(require,module,exports){
 'use strict';
 
 var Backbone = require('backbone');
 
 module.exports = Backbone.Model.extend({
 	defaults: {
-		id: 0,
 		title: '',
 		company: '',
 		location: '',
@@ -32975,7 +33108,7 @@ module.exports = Backbone.Model.extend({
 	}
 });
 
-},{"backbone":1}]},{},[167])
+},{"backbone":1}]},{},[169])
 
 
 //# sourceMappingURL=bundle.js.map

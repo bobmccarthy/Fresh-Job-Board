@@ -4,53 +4,17 @@ var Backbone = require('backbone');
 
 var JobPostComponent = require('./JobPostComponent.js');
 var JobDetailsComponent = require('./JobPostComponent.js');
-var JobAddComponent = require('./JobPostComponent.js');
+var JobFormComponent = require('./JobFormComponent.js');
+var CompanyBoxComponent = require('./CompanyBoxComponent');
 
 var NewJobCollection = require('../collections/NewJobCollection');
 // var CompanyCollection = require('../collections/CompanyCollection');
 
 
-var JobPostModel = require('../models/JobPostModel.js');
+// var JobPostModel = require('../models/JobPostModel.js');
 // var CompanyModel = require('../models/CompanyModel.js');
 
 
-var newJobModel1= new JobPostModel({
-	id: 0,
-	title: 'Front End Developer',
-	company: 'GOOGLE',
-	location: 'Austin, Tx',
-	description: 'We are looking for someone experienced in using jQuery, Backbone, and react.',
-	longVerse: '',
-	tags: ['BestPlaceToWork', ' Google', ' Fun', ' Awesome!'],
-	date: new Date().toDateString()
-})
-var newJobModel2= new JobPostModel({
-	id: 1,
-	title: 'Back End Developer',
-	company: 'Display Inc.',
-	location: 'Austin, Tx',
-	description: 'We are looking for someone experienced in using jQuery, Backbone, and react.',
-	longVerse: '',
-	tags: ['BestPlaceToWork', ' Google', ' Fun', ' Awesome!'],
-	date: new Date().toDateString()
-})
-var newJobModel3= new JobPostModel({
-	id: 2,
-	title: 'Fun Time Live',
-	company: 'Fun Inc.',
-	location: 'Austin, Tx',
-	description: 'Whoever is having the best time ever! We are looking for someone experienced in using jQuery, Backbone, and react.',
-	longVerse: '',
-	tags: ['Fun', ' Intense', ' Fun', ' Awesome!'],
-	date: new Date().toDateString()
-})
-var newJob = new NewJobCollection([
-	newJobModel1,
-	newJobModel2,
-	newJobModel3
-	]);
-
-console.log(newJob);
 
 module.exports = React.createClass({
 	getInitialState: function(){
@@ -61,14 +25,18 @@ module.exports = React.createClass({
 	},
 	componentWillMount: function(){
 		var that = this;
-		// this.jobs = new JobCollection();
-		// newJob.fetch();
+		this.jobs = new NewJobCollection();
+		this.jobs.fetch();
+		this.jobs.on('sync', function(){
+			that.forceUpdate();
+		})
 		var Router = Backbone.Router.extend({
 			routes: {
 				'': 'home',
 				'jobs': 'list',
-				'add': 	'add',
-				'details/:id': 'details'
+				'employers': 	'add',
+				'details/:id': 'details',
+				'companies': 'companies'
 			},
 			home: function(){
 				that.setState({
@@ -82,13 +50,18 @@ module.exports = React.createClass({
 			},
 			add: function() {
 				that.setState({
-					pageName: 'add'
+					pageName: 'employers'
 				});
 			},
 			details: function(id) {
 				that.setState({
 					pageName: 'details',
 					id: id
+				});
+			},
+			companies: function(){
+				that.setState({
+					pageName: 'companies'
 				});
 			}
 		});
@@ -99,13 +72,16 @@ module.exports = React.createClass({
 	render: function(){
 		var pageOn = null;
 		if(this.state.pageName === 'jobs') {
-			pageOn = <JobPostComponent collection={newJob} />;
+			pageOn = <JobPostComponent collection={this.jobs} />;
 		}
 		else if(this.state.pageName === 'details') {
 			pageOn = <JobDetailsComponent  />;
 		}
-		else if(this.state.pageName === 'add') {
-			pageOn = <JobAddComponent />;
+		else if(this.state.pageName === 'employers') {
+			pageOn = <JobFormComponent />
+		}
+		else if(this.state.pageName === 'companies') {
+			pageOn = <CompanyBoxComponent />
 		}
 
 

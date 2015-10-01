@@ -6,10 +6,10 @@ module.exports = React.createClass({
 		return(
 			<div>
 				<hr/>
-				<span><strong>{this.props.job.get('title')}</strong> <span className="postDate">{this.props.job.get('date')}</span></span>
-				<div><h5><strong>{this.props.job.get('company')}</strong> - {this.props.job.get('location')}</h5></div>
-				<p>{this.props.job.get('description')}</p>
-				<div><span className="taga">{this.props.job.get('tags')}</span></div>
+				<span><strong><a href="#jobs">{this.props.bimjob.get('title')}</a></strong> <span className="postDate">{this.props.bimjob.get('date')}</span></span>
+				<div><h5><strong>{this.props.bimjob.get('company')}</strong> - {this.props.bimjob.get('location')}</h5></div>
+				<p>{this.props.bimjob.get('description')}</p>
+				<div><span className="taga">{this.props.bimjob.get('tags')}</span></div>
 			</div>
 		);
 

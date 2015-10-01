@@ -18,18 +18,15 @@ var newCompanyModel1= new CompanyModel({
 
 module.exports = React.createClass({
 	render: function(){
-
-		var jobRows = this.props.collection.map(function(job) {
-			return (
-					<JobRowComponent key={job.id} job={job} />
-			);
-		});
-
-
+		var newJobbies = this.props.collection.map(function(job){
+				return(
+					<JobRowComponent key={job.get('_id')} bimjob={job} />
+					)
+			});
 		return(
 			<div>
 				<div className="boardBorder">
-					{jobRows}
+					{newJobbies}
 				</div>
 				<div className="boardRight">
 					<LookingCreateComponent />
