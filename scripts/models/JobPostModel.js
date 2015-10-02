@@ -11,5 +11,7 @@ module.exports = Backbone.Model.extend({
 		tags: [],
 		date: '',
 		pay: 0
-	}
+	},
+	idAtrribute: '_id',
+	urlRoot: 'https://jmingus-server.herokuapp.com/collections/bobJobs'
 });

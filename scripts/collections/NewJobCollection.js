@@ -4,5 +4,5 @@ var JobPostModel = require ('../models/JobPostModel.js');
 
 module.exports = Backbone.Collection.extend({
 	model: JobPostModel,
-	url: 'https://jmingus-server.herokuapp.com/collections/bob-jobs'
+	url: 'https://jmingus-server.herokuapp.com/collections/bobJobs'
 });

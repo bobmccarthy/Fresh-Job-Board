@@ -16,12 +16,12 @@ $(document).ready(function(){
 	
 
 	React.render(
-		<NavComponent></NavComponent>,
+		<NavComponent />,
 		nav
 	);
 
 	React.render(
-		<AppComponent></AppComponent>,
+		<AppComponent />,
 		main
 	);
 })

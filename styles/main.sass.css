@@ -2,6 +2,17 @@ body {
   margin: 0;
   background-image: url("../images/bg.png"); }
 
+.hero {
+  font-size: 4em;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("../images/hero.jpg");
+  background-size: cover;
+  margin-top: -0.5em;
+  text-align: center;
+  padding: 1em 0;
+  color: white; }
+  .hero p {
+    font-size: 0.5em; }
+
 a {
   color: black; }
 
@@ -9,25 +20,27 @@ nav {
   font-family: sans-serif;
   padding-bottom: 1em;
   margin-bottom: 2em;
-  background-color: #FFFFFF; }
-  nav .bigBreak {
-    height: 1em;
-    margin-top: 0;
-    background-color: #525252; }
+  background-color: #FFFFFF;
+  border-top: 1em solid #848787;
+  overflow: hidden; }
   nav .logo {
     background-image: url("../images/logo.png");
     background-repeat: no-repeat;
-    margin-left: 4em;
+    margin-left: 2em;
     height: 2em;
+    float: left;
     background-size: contain; }
+  nav .navLinks {
+    float: right;
+    width: 60%;
+    margin-top: 0.5em; }
   nav .strong {
-    margin-right: 2em;
     font-size: 1.7em;
     padding-left: .7em; }
   nav a {
     font-weight: bold;
     font-size: .8em;
-    margin: 0 2%;
+    margin: 0 4%;
     text-decoration: none;
     color: black;
     display: inline-block; }
@@ -133,3 +146,8 @@ textarea {
     background-color: white;
     margin: 0 0 0 5%;
     box-sizing: border-box; } }
+
+.jobDeets {
+  margin: 1em;
+  padding: 2em;
+  background-color: white; }
