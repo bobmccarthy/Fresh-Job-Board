@@ -12,8 +12,8 @@ module.exports = React.createClass({
 
 		var coBox = null;
 		if (this.props.company.models.length>0){
-			
-			coBox= <CompanyBoxComponent cpny={this.props.company.models[0]}/>
+
+			coBox= <div id="coBox"><CompanyBoxComponent cpny={this.props.company.models[1]}/></div>
 		}
 		
 
