@@ -32652,8 +32652,15 @@ module.exports = React.createClass({
 			pageOn = React.createElement(JobFormComponent, { collection: this.jobs, router: this.router });
 		} else if (this.state.pageName === 'companies') {
 			if (this.x.models.length > 0) {
-				console.log(this.x.models[0]);
-				pageOn = React.createElement(CompanyBoxComponent, { cpny: this.x.models[0] });
+				console.log(this.x.models);
+				var newComp = this.x.models.map(function (c) {
+					return React.createElement(CompanyBoxComponent, { cpny: c });
+				});
+				pageOn = React.createElement(
+					'div',
+					{ className: 'cpnyBox' },
+					newComp
+				);
 			}
 		} else if (this.state.pageName === '') {
 			pageOn = React.createElement(HomePageComponent, null);
@@ -32737,7 +32744,7 @@ module.exports = React.createClass({
 				React.createElement(
 					"p",
 					null,
-					"Connecting Employers and Employees in One Simple Place"
+					"Connecting Future of Employers With The Future of Employees"
 				)
 			)
 		);
@@ -32923,6 +32930,7 @@ module.exports = React.createClass({
 
 		var coBox = null;
 		if (this.props.company.models.length > 0) {
+
 			coBox = React.createElement(CompanyBoxComponent, { cpny: this.props.company.models[0] });
 		}
 

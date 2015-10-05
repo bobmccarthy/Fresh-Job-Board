@@ -104,8 +104,13 @@ module.exports = React.createClass({
 		}
 		else if(this.state.pageName === 'companies') {
 			if (this.x.models.length>0){
-				console.log(this.x.models[0]);
-				pageOn = <CompanyBoxComponent cpny={this.x.models[0]}/>
+				console.log(this.x.models);
+				var newComp = this.x.models.map(function(c){
+				return(
+					<CompanyBoxComponent cpny={c} />
+					)
+		});
+				pageOn = <div className="cpnyBox">{newComp}</div>
 			}
 			
 		}

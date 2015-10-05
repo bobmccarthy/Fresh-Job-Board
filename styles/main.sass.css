@@ -98,6 +98,10 @@ textarea {
   padding: 1em 2em;
   margin-bottom: 3em; }
 
+.cpnyBox {
+  margin: 0 2em;
+  height: 20em; }
+
 .companyBx {
   background-color: white;
   text-align: center;
@@ -107,9 +111,10 @@ textarea {
     background-size: cover; }
 
 .logoo {
-  padding: 3em 0 2em 0;
+  padding: 5em 0 2em 0;
   width: 30%;
-  margin-bottom: -3em; }
+  margin-bottom: -1em;
+  height: 30%; }
 
 .postDate {
   float: right; }
@@ -121,6 +126,11 @@ textarea {
   background-color: #666666;
   border-radius: 5px;
   margin: 0 10%; }
+
+.jobDeets {
+  margin: 1em;
+  padding: 2em;
+  background-color: white; }
 
 @media screen and (min-width: 58em) {
   #form {
@@ -145,9 +155,13 @@ textarea {
     float: left;
     background-color: white;
     margin: 0 0 0 5%;
-    box-sizing: border-box; } }
-
-.jobDeets {
-  margin: 1em;
-  padding: 2em;
-  background-color: white; }
+    box-sizing: border-box; }
+  .companyBx {
+    margin-left: 2.5%;
+    margin-bottom: 2em;
+    height: 25em;
+    float: left;
+    width: 45%;
+    box-sizing: border-box; }
+  .cpnyBox {
+    margin: 0; } }
